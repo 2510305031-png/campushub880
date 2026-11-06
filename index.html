@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#14213d">
+  <title>CampusHub | Student Management</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand"><div class="brand-mark">C</div><div><strong>CampusHub</strong><small>STUDENT PORTAL</small></div></div>
+      <div class="side-label">WORKSPACE</div>
+      <nav class="nav">
+        <button class="nav-link active" data-page="dashboard"><span>▦</span> Dashboard</button>
+        <button class="nav-link" data-page="students"><span>♙</span> Students</button>
+        <button class="nav-link" data-page="attendance"><span>◷</span> Attendance</button>
+        <button class="nav-link" data-page="courses"><span>▤</span> Courses</button>
+      </nav>
+      <div class="sidebar-bottom"><div class="admin-avatar">AD</div><div><strong>Admin Desk</strong><small>Campus Administrator</small></div></div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <button class="mobile-menu" id="mobileMenu" aria-label="Toggle menu">☰</button>
+        <div><div class="eyebrow">CAMPUS MANAGEMENT</div><h1 id="pageTitle">Dashboard</h1></div>
+        <div class="top-actions"><span class="today" id="todayLabel"></span><div class="profile-chip">AD</div></div>
+      </header>
+
+      <section class="page active" id="dashboardPage">
+        <div class="welcome-row"><div><h2>Welcome back, Admin 👋</h2><p>Here’s what’s happening across your campus today.</p></div><button class="primary-btn" id="dashAddStudent">＋ Add student</button></div>
+        <div class="stats-grid">
+          <article class="stat-card"><div class="stat-icon blue">♙</div><div class="stat-label">Total students</div><div class="stat-value" id="totalStudents">100</div><div class="stat-note">Registered students</div></article>
+          <article class="stat-card"><div class="stat-icon purple">▤</div><div class="stat-label">Active courses</div><div class="stat-value" id="totalCourses">8</div><div class="stat-note">Available programmes</div></article>
+          <article class="stat-card"><div class="stat-icon green">✓</div><div class="stat-label">Present today</div><div class="stat-value" id="presentToday">0</div><div class="stat-note">Students marked present</div></article>
+          <article class="stat-card"><div class="stat-icon orange">◷</div><div class="stat-label">Attendance rate</div><div class="stat-value" id="overallRate">—</div><div class="stat-note">Based on today's records</div></article>
+        </div>
+
+        <div class="dashboard-grid">
+          <section class="panel course-attendance-panel">
+            <div class="panel-heading"><div><h3>Course-wise attendance</h3><p>Today's attendance by course</p></div><span class="tag">LIVE SUMMARY</span></div>
+            <div id="courseAttendance" class="course-attendance-list"></div>
+          </section>
+          <section class="panel popular-panel">
+            <div class="panel-heading"><div><h3>Popular courses</h3><p>Ranked by student enrolment</p></div><span class="tag">TOP 5</span></div>
+            <div id="popularCourses" class="popular-list"></div>
+          </section>
+          <section class="panel recent-panel">
+            <div class="panel-heading"><div><h3>Recently added students</h3><p>Latest student registrations</p></div><button class="text-btn" data-go="students">View all →</button></div>
+            <div class="table-wrap"><table><thead><tr><th>STUDENT</th><th>COURSE</th><th>YEAR</th><th>STATUS</th></tr></thead><tbody id="recentStudents"></tbody></table></div>
+          </section>
+        </div>
+      </section>
+
+      <section class="page" id="studentsPage">
+        <div class="section-intro"><div><h2>Student directory</h2><p>Manage student records, course allocation and details.</p></div><button class="primary-btn" id="addStudentBtn">＋ Add student</button></div>
+        <div class="toolbar"><input id="studentSearch" type="search" placeholder="Search by name, ID or email…"><select id="courseFilter"><option value="all">All courses</option></select></div>
+        <section class="panel"><div class="table-wrap"><table><thead><tr><th>STUDENT</th><th>STUDENT ID</th><th>COURSE</th><th>YEAR</th><th>EMAIL</th><th>ACTIONS</th></tr></thead><tbody id="studentsTable"></tbody></table></div><div class="table-footer" id="studentCount"></div></section>
+      </section>
+
+      <section class="page" id="attendancePage">
+        <div class="section-intro"><div><h2>Attendance register</h2><p>Mark and review attendance for each student.</p></div><div class="date-pill" id="attendanceDate"></div></div>
+        <div class="attendance-summary"><div class="mini-stat"><span>Present</span><strong id="attPresent">0</strong></div><div class="mini-stat"><span>Absent</span><strong id="attAbsent">0</strong></div><div class="mini-stat"><span>Late</span><strong id="attLate">0</strong></div><div class="mini-stat"><span>Not marked</span><strong id="attUnmarked">100</strong></div></div>
+        <div class="toolbar"><input id="attendanceSearch" type="search" placeholder="Search student…"><select id="attendanceCourseFilter"><option value="all">All courses</option></select><select id="attendanceStatusFilter"><option value="all">All statuses</option><option>Present</option><option>Absent</option><option>Late</option><option>Not marked</option></select></div>
+        <section class="panel"><div class="table-wrap"><table><thead><tr><th>STUDENT</th><th>STUDENT ID</th><th>COURSE</th><th>ATTENDANCE</th></tr></thead><tbody id="attendanceTable"></tbody></table></div><div class="table-footer" id="attendanceCount"></div></section>
+      </section>
+
+      <section class="page" id="coursesPage">
+        <div class="section-intro"><div><h2>Course catalogue</h2><p>Create and manage the courses offered on campus.</p></div><button class="primary-btn" id="addCourseBtn">＋ Add course</button></div>
+        <div class="course-summary" id="courseSummary"></div>
+        <div class="course-grid" id="courseGrid"></div>
+      </section>
+      <footer>CampusHub <span>•</span> Student Management Dashboard <span>•</span> Demo project</footer>
+    </main>
+  </div>
+
+  <div class="modal-backdrop" id="studentModal"><form class="modal" id="studentForm">
+    <div class="modal-head"><div><h3 id="studentModalTitle">Add student</h3><p>Enter the student's information below.</p></div><button type="button" class="close-btn" data-close="studentModal">×</button></div>
+    <input type="hidden" id="editStudentId">
+    <label>Full name<input id="studentName" required maxlength="60" placeholder="e.g. Aarav Sharma"></label>
+    <div class="form-row"><label>Student ID<input id="studentId" required maxlength="20" placeholder="e.g. STU101"></label><label>Year<select id="studentYear"><option>1st Year</option><option>2nd Year</option><option>3rd Year</option><option>4th Year</option></select></label></div>
+    <label>Course<select id="studentCourse" required></select></label>
+    <label>Email address<input id="studentEmail" type="email" required placeholder="student@example.com"></label>
+    <div class="modal-actions"><button type="button" class="secondary-btn" data-close="studentModal">Cancel</button><button class="primary-btn" type="submit">Save student</button></div>
+  </form></div>
+
+  <div class="modal-backdrop" id="courseModal"><form class="modal" id="courseForm">
+    <div class="modal-head"><div><h3 id="courseModalTitle">Add course</h3><p>Create a course for student enrolment.</p></div><button type="button" class="close-btn" data-close="courseModal">×</button></div>
+    <input type="hidden" id="editCourseId">
+    <label>Course name<input id="courseName" required maxlength="70" placeholder="e.g. Artificial Intelligence"></label>
+    <label>Course code<input id="courseCode" required maxlength="15" placeholder="e.g. AIML"></label>
+    <label>Description<textarea id="courseDescription" rows="3" maxlength="180" placeholder="A short course description"></textarea></label>
+    <div class="modal-actions"><button type="button" class="secondary-btn" data-close="courseModal">Cancel</button><button class="primary-btn" type="submit">Save course</button></div>
+  </form></div>
+  <div class="toast" id="toast"></div>
+  <script src="script.js"></script>
+</body>
+</html>
